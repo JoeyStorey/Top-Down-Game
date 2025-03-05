@@ -57,9 +57,10 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator RollCheck()
     {
+        //Checks for player input and that they are not already mid-roll
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && midRoll == false) 
         {
-            Debug.Log("Great success!");
+            //Debug.Log("Great success!");
             midRoll = true;
             animator.SetBool("startRoll", true);
             playerHealth.GetComponent<PlayerHealth>().CallInvuln();

@@ -34,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void CallInvuln()
     {
+        //This exists so that the invulnerability coroutine can be called from other scripts
         StartCoroutine(setInvuln());
     }
 

@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca51b822f677c3e4f99f49c551d5401c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.03
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ca51b822f677c3e4f99f49c551d5401c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1298,6 +1298,7 @@ MonoBehaviour:
   controller: {fileID: 1567008938}
   turnSpeed: 0.1
   animator: {fileID: 0}
+  playerHealth: {fileID: 1567008935}
 --- !u!143 &1567008938
 CharacterController:
   m_ObjectHideFlags: 0

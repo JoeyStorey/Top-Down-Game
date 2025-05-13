@@ -18,24 +18,18 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        if (invulnerable == true)
-        {
-            StartCoroutine(setInvuln());
-        }
+        
     }
 
-    //Utter waste of time but I need a enumerator instead of a function to use wait for seconds :)
-    IEnumerator setInvuln()
-    {
-        invulnerable = true;
-        yield return new WaitForSecondsRealtime(1f);
-        invulnerable = false;
-    }
-
+    //These two functions are called when rolling to prevent damage being taken.
     public void CallInvuln()
     {
-        //This exists so that the invulnerability coroutine can be called from other scripts
-        StartCoroutine(setInvuln());
+        invulnerable = true;
+    }
+
+    public void RemoveInvuln()
+    {
+        invulnerable = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +37,7 @@ public class PlayerHealth : MonoBehaviour
         if (other.CompareTag("Enemy") && invulnerable == false)
         {
             currentHealth = currentHealth - 20;
-            Debug.Log("Ow!" + currentHealth);
+            //Debug.Log("Ow!" + currentHealth);
             UIHealth.GetComponent<UIHealth>().UpdateHealth(currentHealth);
         }
     }

@@ -67,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
             speed = speed * 1.2f;
             yield return new WaitForSecondsRealtime(1f);
             speed = speed / 1.2f;
+            playerHealth.GetComponent<PlayerHealth>().RemoveInvuln();
             animator.SetBool("startRoll", false);
             midRoll = false;
         } 

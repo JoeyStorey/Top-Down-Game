@@ -21,15 +21,15 @@ public class PlayerHealth : MonoBehaviour
         
     }
 
-    //These two functions are called when rolling to prevent damage being taken.
-    public void CallInvuln()
+    //This function is used to update whether the player can take damage or not.
+    public void SetInvuln(bool state)
     {
-        invulnerable = true;
-    }
-
-    public void RemoveInvuln()
-    {
-        invulnerable = false;
+        if (state == true)
+        {
+            invulnerable = true;
+        } else {
+            invulnerable = false;
+        } 
     }
 
     private void OnTriggerEnter(Collider other)

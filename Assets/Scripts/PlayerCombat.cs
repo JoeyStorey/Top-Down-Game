@@ -11,7 +11,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject currentWeapon;
     public Animator animator;
     public PlayerMovement playerMovement;
-    private bool midAttack;
+    public bool midAttack;
 
     // Start is called before the first frame update
     void Start()

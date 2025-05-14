@@ -7,18 +7,14 @@ public class PlayerHealth : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
     private bool invulnerable;
+    public float invulnDuration;
     public UIHealth UIHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        invulnerable = true;
+        invulnerable = false;
         currentHealth = maxHealth;
-    }
-
-    void Update()
-    {
-        
     }
 
     //This function is used to update whether the player can take damage or not.
@@ -36,9 +32,19 @@ public class PlayerHealth : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && invulnerable == false)
         {
-            currentHealth = currentHealth - 20;
-            //Debug.Log("Ow!" + currentHealth);
+            currentHealth -= 20;
+            Debug.Log("Ow!" + currentHealth);
             UIHealth.GetComponent<UIHealth>().UpdateHealth(currentHealth);
+            StartCoroutine(HitInvulnerability());
         }
     }
+
+    //Sets the player as invulnerable after taking damage
+    IEnumerator HitInvulnerability()
+    {
+        SetInvuln(true);
+        yield return new WaitForSecondsRealtime(invulnDuration);
+        SetInvuln(false);
+    }
+
 }

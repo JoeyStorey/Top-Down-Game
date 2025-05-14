@@ -11,6 +11,7 @@ public class PlayerCombat : MonoBehaviour
     public GameObject currentWeapon;
     public Animator animator;
     public PlayerMovement playerMovement;
+    private bool midAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class PlayerCombat : MonoBehaviour
         //Sets the current weapon as the sword as the player starts with it and will always have it.
         currentWeapon = Instantiate(sword, weaponPosition.transform);
         playerMovement = GetComponent<PlayerMovement>();
+        midAttack = false;
     }
 
     // Update is called once per frame
@@ -29,7 +31,7 @@ public class PlayerCombat : MonoBehaviour
 
     void AttackCheck()
     {
-        if (Input.GetMouseButtonDown(0) && playerMovement.midRoll == false)
+        if (Input.GetMouseButtonDown(0) && playerMovement.midRoll == false && midAttack == false)
         {
             //TODO: Switch statement for different weapons
             Debug.Log("Swinging sword!");
@@ -39,8 +41,10 @@ public class PlayerCombat : MonoBehaviour
 
     IEnumerator SwingSword()
     {
-
+        midAttack = true;
         animator.SetBool("startSwing", true);
         yield return new WaitForSecondsRealtime(1f);
+        animator.SetBool("startSwing", false);
+        midAttack = false;
     }
 }

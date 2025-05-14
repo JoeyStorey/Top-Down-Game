@@ -6,15 +6,9 @@ public class EnemyHealth : MonoBehaviour
 {
     public int health;
 
-    // Start is called before the first frame update
-    void Start()
+    public void ReceiveDamage(int damage)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        health = health - damage;
+        Debug.Log("Enemy Health:" + health);
     }
 }

@@ -8,11 +8,11 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     public CharacterController controller;
     public float turnSpeed;
+    public float rollSpeedModifier;
     public Animator animator;
     private Vector3 inputVector = new Vector3(0, 0, 0);
     private float turnVelocity;
     public bool midRoll;
-    private Vector3 currentVelocity;
 
     public PlayerHealth playerHealth;
     
@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         midRoll = false;
-        currentVelocity = Vector3.zero;
+        inputVector = Vector3.zero;
         animator = GetComponent<Animator>();
         playerHealth = GetComponent<PlayerHealth>();
     }
@@ -38,11 +38,9 @@ public class PlayerMovement : MonoBehaviour
         if (midRoll == false)
         {
             //Creates a vector based on player inputs, X value for horizontal inputs (A/D) and Z value for vertical (W/S)
-            Vector3 inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
-
-            currentVelocity = inputVector * speed * Time.deltaTime;
+            inputVector = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
             //Move the character based on the input
-            controller.Move(currentVelocity);
+            controller.Move(inputVector * speed * Time.deltaTime);
 
             //This handles rotation, only runs if they're inputting movement. This is to stop it resetting the character into facing up.
             if (inputVector.x != 0 || inputVector.z != 0) 
@@ -62,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
         } //This keeps the player moving in their current direction if they are rolling to prevent them sliding around.
         else 
         {
-            controller.Move(currentVelocity);
+            controller.Move(inputVector * speed * Time.deltaTime);
         }
     }
 
@@ -75,9 +73,9 @@ public class PlayerMovement : MonoBehaviour
             midRoll = true;
             animator.SetBool("startRoll", true);
             playerHealth.GetComponent<PlayerHealth>().SetInvuln(true);
-            speed = speed * 1.1f;
+            speed *= rollSpeedModifier;
             yield return new WaitForSecondsRealtime(1f);
-            speed = speed / 1.1f;
+            speed /= rollSpeedModifier;
             playerHealth.GetComponent<PlayerHealth>().SetInvuln(false);
             animator.SetBool("startRoll", false);
             midRoll = false;

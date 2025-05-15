@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pickups : MonoBehaviour
 {
-    [SerializeField] private string pickupType;
+    [SerializeField] public string pickupType;
 
     void Update()
     {

@@ -101,7 +101,9 @@ public class EnemyBehaviour : MonoBehaviour
             float angle = Mathf.Atan2(rb.velocity.x, rb.velocity.z) * Mathf.Rad2Deg;
             float turningAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref turnVelocity, 40f);
             transform.rotation = Quaternion.Euler(0f, turningAngle, 0f);
-        } else {
+        } else 
+        {
+            //Mid-attack, snaps aim at the character instead of smooth aiming to make sure they aim at the player
             transform.LookAt(playerLocation);
         }
         
@@ -121,7 +123,6 @@ public class EnemyBehaviour : MonoBehaviour
             animator.SetBool("aim", true);
             yield return new WaitForSecondsRealtime(0.5f);
 
-            //TODO: Change transform position to where the arrow is nocked
             //Creates an arrow, applies force to it in the direction the enemy is looking.
             GameObject shotProjectile = Instantiate(projectile, projectileSpawnPoint.position, transform.rotation);
             Rigidbody projectileRB = shotProjectile.GetComponent<Rigidbody>();

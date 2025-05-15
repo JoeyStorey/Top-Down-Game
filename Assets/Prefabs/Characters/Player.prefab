@@ -2069,11 +2069,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPosition: {fileID: 6992062569938290067}
   sword: {fileID: 3281859507612593865, guid: 800e6f650df2bc24daa11deba15c0d1e, type: 3}
-  currentInventory: 
-  currentWeapon: {fileID: 0}
+  shuriken: {fileID: 1044451983758561124, guid: 9f35815197b56024b8a394f18248d5ae, type: 3}
+  dagger: {fileID: 0}
   animator: {fileID: 0}
   playerMovement: {fileID: 0}
   midAttack: 0
+  projectileSpeed: 250
 --- !u!1 &7930217995179624944
 GameObject:
   m_ObjectHideFlags: 0

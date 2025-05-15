@@ -1,17 +1,35 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Net.NetworkInformation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
     public GameObject weaponPosition;
     public GameObject sword;
+    public GameObject shuriken;
+    public GameObject dagger;
+
     //Corresponds to if a player has each specific weapon or not, i.e [1,0,0] means the player only has the sword
-    public bool[] currentInventory;
-    public GameObject currentWeapon;
+    private GameObject currentWeapon;
+    private int currentWeaponNumber;
     public Animator animator;
     public PlayerMovement playerMovement;
     public bool midAttack;
+    public float projectileSpeed;
+
+    public enum Weapon
+    {
+        Sword = 0,
+        Shuriken = 1,
+        Dagger = 2
+    }
+    
+    //Saves the weapons accessible to the player
+    public HashSet<Weapon> Weapons { get; private set; } = new HashSet<Weapon> { Weapon.Sword };
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +37,7 @@ public class PlayerCombat : MonoBehaviour
         animator = GetComponent<Animator>();
         //Sets the current weapon as the sword as the player starts with it and will always have it.
         currentWeapon = Instantiate(sword, weaponPosition.transform);
+        currentWeaponNumber = 0;
         playerMovement = GetComponent<PlayerMovement>();
         midAttack = false;
     }
@@ -27,16 +46,78 @@ public class PlayerCombat : MonoBehaviour
     void Update()
     {
         AttackCheck();
+        SwitchCheck();
     }
 
     void AttackCheck()
     {
         if (Input.GetMouseButtonDown(0) && playerMovement.midRoll == false && midAttack == false)
         {
-            //TODO: Switch statement for different weapons
-            Debug.Log("Swinging sword!");
-            StartCoroutine(SwingSword());
+            switch (currentWeaponNumber)
+            {
+                case 0:
+                    StartCoroutine(SwingSword());
+                    break;
+                case 1:
+                    StartCoroutine(ThrowShuriken());
+                    break;
+                case 2:
+                    //Dagger
+                    break;
+                default:
+                    break;
+            }
+            
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("PickupWeapon"))
+        {
+            //Gets the type of weapon just picked up and adds it to the player inventory
+            Weapon weaponType; 
+            Enum.TryParse(other.GetComponent<Pickups>().pickupType, out weaponType);
+            Weapons.Add(weaponType);
+            Debug.Log(weaponType + "acquired!");
+        }
+    }
+
+    void SwitchCheck()
+    {
+        //Very rudimentary, might change later
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            SwitchWeapon(Weapon.Sword);
+        } 
+        else if (Input.GetKeyDown(KeyCode.Alpha2) && Weapons.Contains(Weapon.Shuriken))
+        {
+            SwitchWeapon(Weapon.Shuriken);
+        } 
+        else if (Input.GetKeyDown(KeyCode.Alpha3) && Weapons.Contains(Weapon.Dagger))
+        {
+            SwitchWeapon(Weapon.Dagger);
+        }
+    }
+
+    void SwitchWeapon(Weapon newWeapon)
+    {
+        Destroy(currentWeapon);
+        switch (newWeapon)
+        {
+            case Weapon.Sword:
+                currentWeapon = Instantiate(sword, weaponPosition.transform);
+                break;
+            case Weapon.Shuriken:
+                //Currently pointless for the ranged weapons
+                currentWeapon = Instantiate(shuriken, weaponPosition.transform);
+                break;
+            case Weapon.Dagger:
+                currentWeapon = Instantiate(dagger, weaponPosition.transform);
+                break;
+        }
+        currentWeaponNumber = (int)newWeapon;
+        Debug.Log(currentWeaponNumber);
     }
 
     IEnumerator SwingSword()
@@ -44,6 +125,22 @@ public class PlayerCombat : MonoBehaviour
         midAttack = true;
         animator.SetBool("startSwing", true);
         yield return new WaitForSecondsRealtime(1f);
+        animator.SetBool("startSwing", false);
+        midAttack = false;
+    }
+
+    IEnumerator ThrowShuriken()
+    {
+        midAttack = true;
+        animator.SetBool("startSwing", true);
+
+        //Creates a new shuriken and applies force in the direction the player is facing. It is rotated to face upwards.
+        GameObject newProjectile = Instantiate(shuriken, weaponPosition.transform.position, Quaternion.Euler(90f, 0f, 90f));
+        Rigidbody projectileRB = newProjectile.GetComponent<Rigidbody>();
+        projectileRB.AddForce(transform.forward * projectileSpeed);
+        projectileRB.freezeRotation = true;
+        yield return new WaitForSecondsRealtime(0.5f);
+
         animator.SetBool("startSwing", false);
         midAttack = false;
     }

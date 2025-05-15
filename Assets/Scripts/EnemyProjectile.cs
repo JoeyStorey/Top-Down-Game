@@ -11,10 +11,4 @@ public class EnemyProjectile : MonoBehaviour
     {
         Destroy(gameObject, projectileLifetime);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

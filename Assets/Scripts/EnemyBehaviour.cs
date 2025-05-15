@@ -58,6 +58,14 @@ public class EnemyBehaviour : MonoBehaviour
             transform.LookAt(playerLocation);
             StartCoroutine(Attack());
         }
+
+        if (isAttacking == true)
+        {
+            animator.SetBool("isMoving", false);
+        }
+        else {
+            animator.SetBool("isMoving", true);
+        }
     }
 
     void Patrol()
@@ -117,7 +125,7 @@ public class EnemyBehaviour : MonoBehaviour
             //Creates an arrow, applies force to it in the direction the enemy is looking.
             GameObject shotProjectile = Instantiate(projectile, projectileSpawnPoint.position, transform.rotation);
             Rigidbody projectileRB = shotProjectile.GetComponent<Rigidbody>();
-            projectileRB.AddForce(transform.forward * 200f);
+            projectileRB.AddForce(transform.forward * projectileSpeed);
             animator.SetBool("fire", true);
             yield return new WaitForSecondsRealtime(0.5f);
 

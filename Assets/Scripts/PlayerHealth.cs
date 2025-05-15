@@ -30,7 +30,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Player HIT!");
         if ((other.CompareTag("Enemy") || other.CompareTag("EnemyProj") )&& invulnerable == false)
         {
             currentHealth -= 20;

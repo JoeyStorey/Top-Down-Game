@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - EnemyProj
+  - PickupHealth
+  - PickupWeapon
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Camera
   - Water
   - UI
   - Enemy

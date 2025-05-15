@@ -33,9 +33,19 @@ public class PlayerHealth : MonoBehaviour
         if ((other.CompareTag("Enemy") || other.CompareTag("EnemyProj") )&& invulnerable == false)
         {
             currentHealth -= 20;
-            Debug.Log("Ow!" + currentHealth);
             UIHealth.GetComponent<UIHealth>().UpdateHealth(currentHealth);
             StartCoroutine(HitInvulnerability());
+        }
+
+        if (other.CompareTag("PickupHealth"))
+        {
+            Debug.Log("Yum! +" + currentHealth);
+            currentHealth += 50;
+            if (currentHealth > maxHealth) 
+            {
+                currentHealth = maxHealth;
+            }
+            UIHealth.GetComponent<UIHealth>().UpdateHealth(currentHealth);
         }
     }
 

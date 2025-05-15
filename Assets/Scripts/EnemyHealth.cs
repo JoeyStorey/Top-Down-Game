@@ -33,6 +33,6 @@ public class EnemyHealth : MonoBehaviour
 
     void Death()
     {
-        //Remove character
+        Destroy(gameObject, 0.2f);
     }
 }

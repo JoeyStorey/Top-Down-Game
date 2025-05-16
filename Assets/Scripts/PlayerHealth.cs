@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -33,6 +34,11 @@ public class PlayerHealth : MonoBehaviour
         if ((other.CompareTag("Enemy") || other.CompareTag("EnemyProj") )&& invulnerable == false)
         {
             currentHealth -= 20;
+            //Game Over
+            if (currentHealth <= 0)
+            {
+                SceneManager.LoadScene(4);
+            }
             UIHealth.GetComponent<UIHealth>().UpdateHealth(currentHealth);
             StartCoroutine(HitInvulnerability());
         }

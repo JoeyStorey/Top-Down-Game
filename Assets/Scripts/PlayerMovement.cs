@@ -53,7 +53,8 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = Quaternion.Euler(0f, turningAngle, 0f);
 
                 animator.SetBool("IsMoving", true);
-            } else
+            } 
+            else
             {
                 animator.SetBool("IsMoving", false);
             }

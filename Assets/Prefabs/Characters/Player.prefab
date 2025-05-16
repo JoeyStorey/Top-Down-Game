@@ -2074,7 +2074,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   playerMovement: {fileID: 0}
   midAttack: 0
-  projectileSpeed: 250
+  projectileSpeed: 400
+  UIEquipment: {fileID: 0}
 --- !u!1 &7930217995179624944
 GameObject:
   m_ObjectHideFlags: 0

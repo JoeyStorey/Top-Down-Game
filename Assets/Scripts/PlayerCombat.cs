@@ -31,7 +31,7 @@ public class PlayerCombat : MonoBehaviour
     }
     
     //Saves the weapons accessible to the player
-    public HashSet<Weapon> Weapons { get; private set; } = new HashSet<Weapon> { Weapon.Sword };
+    public static HashSet<Weapon> Weapons { get; private set; } = new HashSet<Weapon> { Weapon.Sword };
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +53,7 @@ public class PlayerCombat : MonoBehaviour
 
     void AttackCheck()
     {
-        if (Input.GetMouseButtonDown(0) && playerMovement.midRoll == false && midAttack == false)
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.E) && playerMovement.midRoll == false && midAttack == false)
         {
             switch (currentWeaponNumber)
             {

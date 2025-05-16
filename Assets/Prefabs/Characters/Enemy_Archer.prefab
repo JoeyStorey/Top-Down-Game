@@ -643,8 +643,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   patrolPosition: {x: 48, y: 1, z: 42}
-  enemySightRadius: 6
-  enemyAttackRadius: 4
+  enemySightRadius: 8
+  enemyAttackRadius: 6
   projectile: {fileID: 7357513952674470593, guid: 016ab2ba2e6cbe340954147e82fe8f80, type: 3}
   projectileSpeed: 300
   projectileLifetime: 4

@@ -16,12 +16,8 @@ public class EnemyProjectile : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        Destroy(gameObject);
-    }
 }

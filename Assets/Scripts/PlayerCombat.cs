@@ -21,6 +21,8 @@ public class PlayerCombat : MonoBehaviour
     public bool midAttack;
     public float projectileSpeed;
 
+    public UIEquipment UIEquipment;
+
     public enum Weapon
     {
         Sword = 0,
@@ -62,7 +64,7 @@ public class PlayerCombat : MonoBehaviour
                     StartCoroutine(ThrowShuriken());
                     break;
                 case 2:
-                    //Dagger
+                    StartCoroutine(ThrowDagger());
                     break;
                 default:
                     break;
@@ -107,17 +109,19 @@ public class PlayerCombat : MonoBehaviour
         {
             case Weapon.Sword:
                 currentWeapon = Instantiate(sword, weaponPosition.transform);
+                UIEquipment.UpdateEquipment("Sword");
                 break;
             case Weapon.Shuriken:
                 //Currently pointless for the ranged weapons
                 currentWeapon = Instantiate(shuriken, weaponPosition.transform);
+                UIEquipment.UpdateEquipment("Shuriken");
                 break;
             case Weapon.Dagger:
                 currentWeapon = Instantiate(dagger, weaponPosition.transform);
+                UIEquipment.UpdateEquipment("Dagger");
                 break;
         }
         currentWeaponNumber = (int)newWeapon;
-        Debug.Log(currentWeaponNumber);
     }
 
     IEnumerator SwingSword()
@@ -140,6 +144,25 @@ public class PlayerCombat : MonoBehaviour
         projectileRB.AddForce(transform.forward * projectileSpeed);
         projectileRB.freezeRotation = true;
         yield return new WaitForSecondsRealtime(0.5f);
+
+        animator.SetBool("startSwing", false);
+        midAttack = false;
+    }
+
+    IEnumerator ThrowDagger()
+    {
+        //Essentially identical to the shuriken, except there is a bigger delay in swings and it deals more damage.
+        midAttack = true;
+        animator.SetBool("startSwing", true);
+
+        //Rotation currently broken, only throws sideways.
+        Quaternion newRotation = transform.rotation;
+        newRotation.y += 90;
+        GameObject newProjectile = Instantiate(dagger, weaponPosition.transform.position, transform.rotation);
+        Rigidbody projectileRB = newProjectile.GetComponent<Rigidbody>();
+        projectileRB.AddForce(transform.forward * projectileSpeed);
+        projectileRB.freezeRotation = true;
+        yield return new WaitForSecondsRealtime(1f);
 
         animator.SetBool("startSwing", false);
         midAttack = false;

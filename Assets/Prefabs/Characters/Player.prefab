@@ -2070,7 +2070,7 @@ MonoBehaviour:
   weaponPosition: {fileID: 6992062569938290067}
   sword: {fileID: 3281859507612593865, guid: 800e6f650df2bc24daa11deba15c0d1e, type: 3}
   shuriken: {fileID: 1044451983758561124, guid: 9f35815197b56024b8a394f18248d5ae, type: 3}
-  dagger: {fileID: 0}
+  dagger: {fileID: 7035178219198038559, guid: 464f0d6c392ef4f4e8c202558008e034, type: 3}
   animator: {fileID: 0}
   playerMovement: {fileID: 0}
   midAttack: 0

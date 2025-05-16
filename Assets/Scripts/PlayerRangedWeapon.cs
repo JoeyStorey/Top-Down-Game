@@ -15,7 +15,7 @@ public class PlayerRangedWeapon : MonoBehaviour
         player = GameObject.Find("Player");
         playerCombat = player.GetComponent<PlayerCombat>();
 
-        Destroy(gameObject, projectileLifetime);
+        transform.Rotate(20f, 0f, 0f);
     }
 
     private void OnTriggerEnter(Collider other)
